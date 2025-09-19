@@ -246,7 +246,10 @@
             }
           }
         ]
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites/config', variables('xcSearchWebAppNameTidy'), 'appsettings')]"
+      ]
     },
     {
       "name": "[concat(variables('xcSearchWebAppNameTidy'), '/', 'appsettings')]",
@@ -256,10 +259,7 @@
         "minTlsVersion": "[parameters('minTlsVersion')]",
         "WEBSITE_DYNAMIC_CACHE": 0,
         "SITECORE_ENVIRONMENT_TYPE": "[parameters('environmentType')]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites/extensions', variables('xcSearchWebAppNameTidy'),'MSDeploy')]"
-      ]
+      }
     }
   ]
 }

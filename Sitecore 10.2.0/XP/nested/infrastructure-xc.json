@@ -410,11 +410,11 @@
       "type": "object",
       "defaultValue": "[parameters('skuMap')[parameters('sitecoreSKU')]]"
     },
-    "aseName":{
+    "aseName": {
       "type": "string",
       "defaultValue": ""
     },
-    "aseResourceGroupName":{
+    "aseResourceGroupName": {
       "type": "string",
       "defaultValue": "[resourceGroup().name]"
     }
