@@ -222,11 +222,11 @@
       "defaultValue": "Non-Production"
     },
 
-    "azureServiceBusNamespaceName" : {
+    "azureServiceBusNamespaceName": {
       "type": "string",
       "minLength": 1
     },
-    "azureServiceBusAccessKeyName" : {
+    "azureServiceBusAccessKeyName": {
       "type": "string",
       "minLength": 1
     },
@@ -248,7 +248,7 @@
       "apiVersion": "[variables('webApiVersion')]",
       "properties": {
         "addOnPackages": [
-          {          
+          {
             "packageUri": "[parameters('xcRefDataMsDeployPackageUrl')]",
             "setParameters": {
               "IIS Web Application Name": "[variables('xcRefDataWebAppNameTidy')]",
@@ -259,16 +259,13 @@
               "XConnect Server Configuration Environment": "[parameters('xcServerConfigurationEnvironment')]",
               "XConnect Server Certificate Validation Thumbprint": "[parameters('authCertificateThumbprint')]",
               "Allow Invalid Client Certificates": "[parameters('allowInvalidClientCertificates')]",
-              "XConnect Server Application Insights Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).InstrumentationKey, '')]",
+              "XConnect Server Application Insights Connection String": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).ConnectionString, '')]",
               "XConnect Server Instance Name": "ReferenceData",
               "License Xml": "[parameters('licenseXml')]"
             }
           }
         ]
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites/config', variables('xcRefDataWebAppNameTidy'),'appsettings')]"
-      ]
+      }
     },
     {
       "name": "[concat(variables('xcCollectWebAppNameTidy'), '/', 'MSDeploy')]",
@@ -277,7 +274,7 @@
       "apiVersion": "[variables('webApiVersion')]",
       "properties": {
         "addOnPackages": [
-          {          
+          {
             "packageUri": "[parameters('xcCollectMsDeployPackageUrl')]",
             "dbType": "SQL",
             "connectionString": "[concat('Data Source=tcp:', variables('sqlServerFqdnTidy'), ',1433;Initial Catalog=master;User Id=', parameters('sqlServerLogin'), ';Password=', parameters('sqlServerPassword'), ';')]",
@@ -305,7 +302,7 @@
               "XConnect Server Configuration Environment": "[parameters('xcServerConfigurationEnvironment')]",
               "XConnect Server Certificate Validation Thumbprint": "[parameters('authCertificateThumbprint')]",
               "Allow Invalid Client Certificates": "[parameters('allowInvalidClientCertificates')]",
-              "XConnect Server Application Insights Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).InstrumentationKey, '')]",
+              "XConnect Server Application Insights Connection String": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).ConnectionString, '')]",
               "XP Performance Counters Type": "[if(parameters('useApplicationInsights'), concat('Sitecore:XConnect:Diagnostics:PerformanceCounters:', parameters('xpPerformanceCountersType')), 'Sitecore:XConnect:Diagnostics:PerformanceCounters:Disable')]",
               "XConnect Server Instance Name": "Collection",
               "License Xml": "[parameters('licenseXml')]"
@@ -314,7 +311,7 @@
         ]
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites/config', variables('xcCollectWebAppNameTidy'), 'appsettings')]"
+        "[resourceId('Microsoft.Web/sites/config', variables('xcRefDataWebAppNameTidy'), 'appsettings')]"
       ]
     },
     {
@@ -417,7 +414,7 @@
           },
 
           "azureServiceBusNamespaceName": {
-            "value" : "[parameters('azureServiceBusNamespaceName')]"
+            "value": "[parameters('azureServiceBusNamespaceName')]"
           },
           "azureServiceBusAccessKeyName": {
             "value": "[parameters('azureServiceBusAccessKeyName')]"
@@ -431,7 +428,7 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites/extensions', variables('xcCollectWebAppNameTidy'),'MSDeploy')]"
+        "[resourceId('Microsoft.Web/sites/config', variables('xcCollectWebAppNameTidy'), 'appsettings')]"
       ]
     },
     {
@@ -442,7 +439,10 @@
         "minTlsVersion": "[parameters('minTlsVersion')]",
         "WEBSITE_DYNAMIC_CACHE": 0,
         "SITECORE_ENVIRONMENT_TYPE": "[parameters('environmentType')]"
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites/extensions', variables('xcRefDataWebAppNameTidy'),'MSDeploy')]"
+      ]
     },
     {
       "name": "[concat(variables('xcCollectWebAppNameTidy'), '/', 'appsettings')]",
@@ -454,7 +454,7 @@
         "SITECORE_ENVIRONMENT_TYPE": "[parameters('environmentType')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites/extensions', variables('xcRefDataWebAppNameTidy'), 'MSDeploy')]"
+        "[resourceId('Microsoft.Web/sites/extensions', variables('xcCollectWebAppNameTidy'), 'MSDeploy')]"
       ]
     }
   ]

@@ -193,11 +193,11 @@
       "defaultValue": "Non-Production"
     },
 
-    "azureServiceBusNamespaceName" : {
+    "azureServiceBusNamespaceName": {
       "type": "string",
       "minLength": 1
     },
-    "azureServiceBusAccessKeyName" : {
+    "azureServiceBusAccessKeyName": {
       "type": "string",
       "minLength": 1
     },
@@ -251,7 +251,7 @@
               "Marketing Automation Engine Xdb Reference Data Endpoint": "[concat('https://', reference(resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Web/sites', variables('xcRefDataWebAppNameTidy')), variables('webApiVersion')).hostNames[0])]",
               "Marketing Automation Engine Xdb Reference Data Client Certificate Thumbprint": "[parameters('authCertificateThumbprint')]",
               "Allow Invalid Client Certificates": "[parameters('allowInvalidClientCertificates')]",
-              "XConnect Server Application Insights Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).InstrumentationKey, '')]",
+              "XConnect Server Application Insights Connection String": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).ConnectionString, '')]",
               "XP Performance Counters Type": "[if(parameters('useApplicationInsights'), concat('Sitecore:XConnect:Diagnostics:PerformanceCounters:', parameters('xpPerformanceCountersType')), 'Sitecore:XConnect:Diagnostics:PerformanceCounters:Disable')]",
               "XConnect Server Instance Name": "MarketingAutomation",
               "License Xml": "[parameters('licenseXml')]"
@@ -281,7 +281,7 @@
               "XConnect Server Configuration Environment": "[parameters('xcServerConfigurationEnvironment')]",
               "XConnect Server Certificate Validation Thumbprint": "[parameters('authCertificateThumbprint')]",
               "Allow Invalid Client Certificates": "[parameters('allowInvalidClientCertificates')]",
-              "XConnect Server Application Insights Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).InstrumentationKey, '')]",
+              "XConnect Server Application Insights Connection String": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).ConnectionString, '')]",
               "XP Performance Counters Type": "[if(parameters('useApplicationInsights'), concat('Sitecore:XConnect:Diagnostics:PerformanceCounters:', parameters('xpPerformanceCountersType')), 'Sitecore:XConnect:Diagnostics:PerformanceCounters:Disable')]",
               "XConnect Server Instance Name": "MarketingAutomationReporting",
               "License Xml": "[parameters('licenseXml')]"
@@ -290,7 +290,7 @@
         ]
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites/extensions', variables('maOpsWebAppNameTidy'),'MSDeploy')]"
+        "[resourceId('Microsoft.Web/sites/config', variables('maOpsWebAppNameTidy'),'appsettings')]"
       ]
     },
     {
