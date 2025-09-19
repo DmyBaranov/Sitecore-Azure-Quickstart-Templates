@@ -193,7 +193,7 @@
               "XConnect Server Configuration Environment": "[parameters('xcServerConfigurationEnvironment')]",
               "XConnect Server Certificate Validation Thumbprint": "[parameters('authCertificateThumbprint')]",
               "Allow Invalid Client Certificates": "[parameters('allowInvalidClientCertificates')]",
-              "XConnect Server Application Insights Connection String": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).ConnectionString, '')]",
+              "XConnect Server Application Insights Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).InstrumentationKey, '')]",
               "XP Performance Counters Type": "[if(parameters('useApplicationInsights'), concat('Sitecore:XConnect:Diagnostics:PerformanceCounters:', parameters('xpPerformanceCountersType')), 'Sitecore:XConnect:Diagnostics:PerformanceCounters:Disable')]",
               "XConnect Server Instance Name": "Reporting",
               "License Xml": "[parameters('licenseXml')]"
@@ -246,7 +246,7 @@
               "Processing Engine Xconnect Search Client Endpoint": "[concat('https://', reference(resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Web/sites', variables('xcSearchWebAppNameTidy')), variables('webApiVersion')).hostNames[0])]",
               "Processing Engine Xconnect Search Client Certificate Thumbprint": "[parameters('authCertificateThumbprint')]",
               "Allow Invalid Client Certificates": "[parameters('allowInvalidClientCertificates')]",
-              "XConnect Server Application Insights Connection String": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).ConnectionString, '')]",
+              "XConnect Server Application Insights Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).InstrumentationKey, '')]",
               "XP Performance Counters Type": "[if(parameters('useApplicationInsights'), concat('Sitecore:XConnect:Diagnostics:PerformanceCounters:', parameters('xpPerformanceCountersType')), 'Sitecore:XConnect:Diagnostics:PerformanceCounters:Disable')]",
               "XConnect Server Instance Name": "Processing",
               "License Xml": "[parameters('licenseXml')]"

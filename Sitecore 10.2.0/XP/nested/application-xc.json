@@ -259,7 +259,7 @@
               "XConnect Server Configuration Environment": "[parameters('xcServerConfigurationEnvironment')]",
               "XConnect Server Certificate Validation Thumbprint": "[parameters('authCertificateThumbprint')]",
               "Allow Invalid Client Certificates": "[parameters('allowInvalidClientCertificates')]",
-              "XConnect Server Application Insights Connection String": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).ConnectionString, '')]",
+              "XConnect Server Application Insights Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).InstrumentationKey, '')]",
               "XConnect Server Instance Name": "ReferenceData",
               "License Xml": "[parameters('licenseXml')]"
             }
@@ -305,7 +305,7 @@
               "XConnect Server Configuration Environment": "[parameters('xcServerConfigurationEnvironment')]",
               "XConnect Server Certificate Validation Thumbprint": "[parameters('authCertificateThumbprint')]",
               "Allow Invalid Client Certificates": "[parameters('allowInvalidClientCertificates')]",
-              "XConnect Server Application Insights Connection String": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).ConnectionString, '')]",
+              "XConnect Server Application Insights Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('appInsightsNameTidy')), variables('appInsightsApiVersion')).InstrumentationKey, '')]",
               "XP Performance Counters Type": "[if(parameters('useApplicationInsights'), concat('Sitecore:XConnect:Diagnostics:PerformanceCounters:', parameters('xpPerformanceCountersType')), 'Sitecore:XConnect:Diagnostics:PerformanceCounters:Disable')]",
               "XConnect Server Instance Name": "Collection",
               "License Xml": "[parameters('licenseXml')]"
